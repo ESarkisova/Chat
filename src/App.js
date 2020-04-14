@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useContext, useEffect} from 'react'
+import MainWindow from "./components/MainWindow/MainWindow"
+import {ChatContext} from "./context/chat/chatContext"
+import './App.css'
 
 function App() {
+    const {name, usersList, messagesList, loadMessage} = useContext(ChatContext)
+    useEffect(() => {
+        loadMessage()
+    }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <div className="container">
+            {usersList.map( user => <MainWindow
+                key = {user.id}
+                name = {name}
+                user= {user}
+                messagesList={messagesList}/> )
+            }
+        </div>
+  )
 }
 
-export default App;
+export default App

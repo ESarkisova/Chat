@@ -1,34 +1,53 @@
 import React, {useReducer} from 'react'
 import {chatReducer} from "./chatReducer"
 import {ChatContext} from "./chatContext"
-import {ADD_MESSAGE} from "../types"
+import {ADD_MESSAGE, LOAD_MESSAGE} from "../types"
 
+const NAME_LS = 'MESSAGES'
 
 export const ChatState = ({children}) => {
     const initialState = {
         id: 23,
         name: 'Тестовый чат',
         usersList: [{id: 1, name: 'operator'},{id: 2, name: 'user'}],
-        messageList: [{id: 5, from: 1, text: 'Hello'}, {id: 6, from: 2, text: 'HelloYou'}]
+        messagesList: []
     }
 
     const [state, dispatch] = useReducer(chatReducer, initialState)
 
-    const addMessage = message => {
-        dispatch({type: ADD_MESSAGE, message})
+    const getMessagesFromLS = () => {
+        if (window.localStorage) {
+            let messagesFromLS = JSON.parse(localStorage.getItem(NAME_LS)) || []
+            return messagesFromLS
+        }
+        return []
+    }
+
+    const addMessagesToLS = message => {
+        if (window.localStorage) {
+            const messagesFromLS = getMessagesFromLS()
+            messagesFromLS.push(message)
+            localStorage.setItem(NAME_LS, JSON.stringify(messagesFromLS))
+        }
+    }
+
+    const addMessages = message => {
+        addMessagesToLS(message)
+        dispatch({type: ADD_MESSAGE, payload: message})
     }
 
     const loadMessage = () => {
-        console.log('load msg')
+        const messagesFromLS = getMessagesFromLS()
+        dispatch({type: LOAD_MESSAGE, payload: messagesFromLS})
     }
 
 
     return (
         <ChatContext.Provider value={{
-            addMessage, loadMessage,
+            addMessages, loadMessage,
             name: state.name,
-            userList: state.userList,
-            messageList: state.messageList
+            usersList: state.usersList,
+            messagesList: state.messagesList
         }}>
             {children}
         </ChatContext.Provider>

@@ -1,0 +1,23 @@
+.chat__container {
+    margin: 0 10px;
+    padding: 20px;
+    width: 450px;
+    min-height: 552px;
+    background-color: rgba(50,140,183, 0.63);
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #fff;
+}
+.chat__header {
+    position: relative;
+    margin: 0 0 20px 0;
+    padding: 0 50px 0 0;
+    text-align: left;
+}
+.chat__header small {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 70%;
+    font-weight: 300;
+}

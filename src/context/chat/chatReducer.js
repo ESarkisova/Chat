@@ -6,12 +6,12 @@ export const chatReducer = (state, action) => {
         case LOAD_MESSAGE:
             return {
                 ...state,
-                messageList: [...action.payload, ...state.messageList]
+                messagesList: [...action.payload, ...state.messagesList]
             };
         case ADD_MESSAGE:
             return {
                 ...state,
-                messageList: [...state.messageList, action.payload]
+                messagesList: [...state.messagesList, action.payload]
             };
         default:
             return state;

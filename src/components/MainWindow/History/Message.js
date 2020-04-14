@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default ({message}) => {
+export default ({userId, message}) => {
     return (
-        <div>Message</div>
+        <div className={message.from === userId ? 'message message_from' : 'message message_to'}>
+            <div className = 'message__inner'>
+                {message.text}
+            </div>
+        </div>
     )
 }
